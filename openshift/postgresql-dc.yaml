@@ -2,7 +2,7 @@
 kind: Template
 apiVersion: template.openshift.io/v1
 metadata:
-  name: gdxlimesurvey-postgresql-dc
+  name: gdx-limesurvey-postgresql-dc
 parameters:
   - description: The short-name of the Survey Service, lower-case with hyphen.
     displayName: Survey Name
@@ -29,9 +29,9 @@ objects:
   - kind: Secret
     apiVersion: v1
     metadata:
-      name: "${SURVEY_NAME}limesurvey-postgresql"
+      name: "${SURVEY_NAME}-limesurvey-postgresql"
       labels:
-        app: "${SURVEY_NAME}limesurvey"
+        app: "${SURVEY_NAME}-limesurvey"
       annotations:
         description: Database credentials and name.
         template.openshift.io/expose-database_name: "{.data['database-name']}"
@@ -44,9 +44,9 @@ objects:
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: "${SURVEY_NAME}limesurvey-postgresql"
+      name: "${SURVEY_NAME}-limesurvey-postgresql"
       labels:
-        app: "${SURVEY_NAME}limesurvey"
+        app: "${SURVEY_NAME}-limesurvey"
     spec:
       accessModes:
         - ReadWriteOnce
@@ -57,9 +57,9 @@ objects:
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
-      name: "${SURVEY_NAME}limesurvey-postgresql"
+      name: "${SURVEY_NAME}-limesurvey-postgresql"
       labels:
-        app: "${SURVEY_NAME}limesurvey"
+        app: "${SURVEY_NAME}-limesurvey"
       annotations: {}
     spec:
       strategy:
@@ -74,7 +74,7 @@ objects:
           imageChangeParams:
             automatic: true
             containerNames:
-              - "${SURVEY_NAME}limesurvey-postgresql"
+              - "${SURVEY_NAME}-limesurvey-postgresql"
             from:
               kind: ImageStreamTag
               namespace: openshift
@@ -83,22 +83,22 @@ objects:
       revisionHistoryLimit: 10
       test: false
       selector:
-        app: "${SURVEY_NAME}limesurvey"
-        deploymentconfig: "${SURVEY_NAME}limesurvey-postgresql"
+        app: "${SURVEY_NAME}-limesurvey"
+        deploymentconfig: "${SURVEY_NAME}-limesurvey-postgresql"
       template:
         metadata:
           creationTimestamp:
           labels:
-            app: "${SURVEY_NAME}limesurvey"
-            deploymentconfig: "${SURVEY_NAME}limesurvey-postgresql"
+            app: "${SURVEY_NAME}-limesurvey"
+            deploymentconfig: "${SURVEY_NAME}-limesurvey-postgresql"
           annotations: {}
         spec:
           volumes:
             - name: postgresql-volume
               persistentVolumeClaim:
-                claimName: "${SURVEY_NAME}limesurvey-postgresql"
+                claimName: "${SURVEY_NAME}-limesurvey-postgresql"
           containers:
-            - name: "${SURVEY_NAME}limesurvey-postgresql"
+            - name: "${SURVEY_NAME}-limesurvey-postgresql"
               image: " "
               ports:
                 - containerPort: 5432
@@ -107,17 +107,17 @@ objects:
                 - name: POSTGRESQL_DATABASE
                   valueFrom:
                     secretKeyRef:
-                      name: "${SURVEY_NAME}limesurvey-postgresql"
+                      name: "${SURVEY_NAME}-limesurvey-postgresql"
                       key: database-name
                 - name: POSTGRESQL_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: "${SURVEY_NAME}limesurvey-postgresql"
+                      name: "${SURVEY_NAME}-limesurvey-postgresql"
                       key: database-password
                 - name: POSTGRESQL_USER
                   valueFrom:
                     secretKeyRef:
-                      name: "${SURVEY_NAME}limesurvey-postgresql"
+                      name: "${SURVEY_NAME}-limesurvey-postgresql"
                       key: database-user
               resources:
                 limits:
@@ -149,9 +149,9 @@ objects:
   - kind: Service
     apiVersion: v1
     metadata:
-      name: "${SURVEY_NAME}limesurvey-postgresql"
+      name: "${SURVEY_NAME}-limesurvey-postgresql"
       labels:
-        app: "${SURVEY_NAME}limesurvey"
+        app: "${SURVEY_NAME}-limesurvey"
       annotations: {}
     spec:
       ports:
@@ -160,8 +160,8 @@ objects:
           port: 5432
           targetPort: 5432
       selector:
-        app: "${SURVEY_NAME}limesurvey"
-        deploymentconfig: "${SURVEY_NAME}limesurvey-postgresql"
+        app: "${SURVEY_NAME}-limesurvey"
+        deploymentconfig: "${SURVEY_NAME}-limesurvey-postgresql"
       type: ClusterIP
       sessionAffinity: None
     status:

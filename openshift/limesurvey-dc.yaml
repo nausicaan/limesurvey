@@ -2,17 +2,17 @@
 kind: Template
 apiVersion: template.openshift.io/v1
 metadata:
-  name: gdxlimesurvey-app-dc
+  name: gdx-limesurvey-app-dc
 parameters:
   - description: The OpenShift Namespace where the ImageStream resides.
     displayName: Namespace
     name: IS_NAMESPACE
-    value: 245e18-tools
+    value: c329bd-tools
   - description: The OpenShift ImageStream name.
     displayName: Image Stream
     name: IS_NAME
-    value: limesurvey-bcgov
-  - description: Version of LimeSurvey image to be used (e.g. v.3.16).
+    value: limesurvey-gdx
+  - description: Version of LimeSurvey image to be used (e.g. v.3.16.1).
     displayName: Version of LimeSurvey
     name: IS_VERSION
     value: 5.4.14
@@ -63,9 +63,9 @@ objects:
   - kind: Secret
     apiVersion: v1
     metadata:
-      name: "${SURVEY_NAME}limesurvey-app"
+      name: "${SURVEY_NAME}-limesurvey-app"
       labels:
-        app: "${SURVEY_NAME}limesurvey"
+        app: "${SURVEY_NAME}-limesurvey"
       annotations:
         description: Application Administrator credentials and name.
         template.openshift.io/expose-admin_username: "{.data['admin-user']}"
@@ -80,9 +80,9 @@ objects:
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: "${SURVEY_NAME}limesurvey-app-upload"
+      name: "${SURVEY_NAME}-limesurvey-app-upload"
       labels:
-        app: "${SURVEY_NAME}limesurvey"
+        app: "${SURVEY_NAME}-limesurvey"
     spec:
       accessModes:
         - ReadWriteMany
@@ -93,9 +93,9 @@ objects:
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: "${SURVEY_NAME}limesurvey-app-config"
+      name: "${SURVEY_NAME}-limesurvey-app-config"
       labels:
-        app: "${SURVEY_NAME}limesurvey"
+        app: "${SURVEY_NAME}-limesurvey"
     spec:
       accessModes:
         - ReadWriteMany
@@ -106,9 +106,9 @@ objects:
   - kind: PersistentVolumeClaim
     apiVersion: v1
     metadata:
-      name: "${SURVEY_NAME}limesurvey-app-plugins"
+      name: "${SURVEY_NAME}-limesurvey-app-plugins"
       labels:
-        app: "${SURVEY_NAME}limesurvey"
+        app: "${SURVEY_NAME}-limesurvey"
     spec:
       accessModes:
         - ReadWriteMany
@@ -119,10 +119,10 @@ objects:
   - kind: DeploymentConfig
     apiVersion: v1
     metadata:
-      name: "${SURVEY_NAME}limesurvey-app"
+      name: "${SURVEY_NAME}-limesurvey-app"
       generation: 1
       labels:
-        app: "${SURVEY_NAME}limesurvey"
+        app: "${SURVEY_NAME}-limesurvey"
       annotations: {}
     spec:
       strategy:
@@ -141,7 +141,7 @@ objects:
           imageChangeParams:
             automatic: true
             containerNames:
-              - "${SURVEY_NAME}limesurvey-app"
+              - "${SURVEY_NAME}-limesurvey-app"
             from:
               kind: ImageStreamTag
               namespace: "${IS_NAMESPACE}"
@@ -150,27 +150,27 @@ objects:
       revisionHistoryLimit: 10
       test: false
       selector:
-        app: "${SURVEY_NAME}limesurvey"
-        deploymentconfig: "${SURVEY_NAME}limesurvey-app"
+        app: "${SURVEY_NAME}-limesurvey"
+        deploymentconfig: "${SURVEY_NAME}-limesurvey-app"
       template:
         metadata:
           labels:
-            app: "${SURVEY_NAME}limesurvey"
-            deploymentconfig: "${SURVEY_NAME}limesurvey-app"
+            app: "${SURVEY_NAME}-limesurvey"
+            deploymentconfig: "${SURVEY_NAME}-limesurvey-app"
           annotations: {}
         spec:
           volumes:
-            - name: "${SURVEY_NAME}limesurvey-app-upload"
+            - name: "${SURVEY_NAME}-limesurvey-app-upload"
               persistentVolumeClaim:
-                claimName: "${SURVEY_NAME}limesurvey-app-upload"
-            - name: "${SURVEY_NAME}limesurvey-app-config"
+                claimName: "${SURVEY_NAME}-limesurvey-app-upload"
+            - name: "${SURVEY_NAME}-limesurvey-app-config"
               persistentVolumeClaim:
-                claimName: "${SURVEY_NAME}limesurvey-app-config"
-            - name: "${SURVEY_NAME}limesurvey-app-plugins"
+                claimName: "${SURVEY_NAME}-limesurvey-app-config"
+            - name: "${SURVEY_NAME}-limesurvey-app-plugins"
               persistentVolumeClaim:
-                claimName: "${SURVEY_NAME}limesurvey-app-plugins"
+                claimName: "${SURVEY_NAME}-limesurvey-app-plugins"
           containers:
-            - name: "${SURVEY_NAME}limesurvey-app"
+            - name: "${SURVEY_NAME}-limesurvey-app"
               image: " "
               command: ["/bin/sh"]
               args: ["-c", "docker-entrypoint.sh apache2-foreground"]
@@ -183,42 +183,42 @@ objects:
                 - name: ADMIN_USER
                   valueFrom:
                     secretKeyRef:
-                      name: "${SURVEY_NAME}limesurvey-app"
+                      name: "${SURVEY_NAME}-limesurvey-app"
                       key: admin-user
                 - name: ADMIN_NAME
                   valueFrom:
                     secretKeyRef:
-                      name: "${SURVEY_NAME}limesurvey-app"
+                      name: "${SURVEY_NAME}-limesurvey-app"
                       key: admin-name
                 - name: ADMIN_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: "${SURVEY_NAME}limesurvey-app"
+                      name: "${SURVEY_NAME}-limesurvey-app"
                       key: admin-password
                 - name: ADMIN_EMAIL
                   valueFrom:
                     secretKeyRef:
-                      name: "${SURVEY_NAME}limesurvey-app"
+                      name: "${SURVEY_NAME}-limesurvey-app"
                       key: admin-email
                 - name: DB_TYPE
                   value: "${DB_TYPE}"
                 - name: POSTGRESQL_USERNAME
                   valueFrom:
                     secretKeyRef:
-                      name: "${SURVEY_NAME}limesurvey-postgresql"
+                      name: "${SURVEY_NAME}-limesurvey-postgresql"
                       key: database-user
                 - name: POSTGRESQL_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                      name: "${SURVEY_NAME}limesurvey-postgresql"
+                      name: "${SURVEY_NAME}-limesurvey-postgresql"
                       key: database-password
                 - name: POSTGRESQL_DB_NAME
                   valueFrom:
                     secretKeyRef:
-                      name: "${SURVEY_NAME}limesurvey-postgresql"
+                      name: "${SURVEY_NAME}-limesurvey-postgresql"
                       key: database-name
                 - name: POSTGRESQL_DB_HOST
-                  value: "${SURVEY_NAME}limesurvey-postgresql"
+                  value: "${SURVEY_NAME}-limesurvey-postgresql"
                 - name: POSTGRESQL_PORT
                   value: "5432"
               resources:
@@ -229,11 +229,11 @@ objects:
                   cpu: "${CPU_REQUEST}"
                   memory: "${MEMORY_REQUEST}"
               volumeMounts:
-                - name: "${SURVEY_NAME}limesurvey-app-upload"
+                - name: "${SURVEY_NAME}-limesurvey-app-upload"
                   mountPath: "/var/www/html/upload"
-                - name: "${SURVEY_NAME}limesurvey-app-config"
+                - name: "${SURVEY_NAME}-limesurvey-app-config"
                   mountPath: "/var/www/html/config"
-                - name: "${SURVEY_NAME}limesurvey-app-plugins"
+                - name: "${SURVEY_NAME}-limesurvey-app-plugins"
                   mountPath: "/var/www/html/plugins"
               livenessProbe:
                 httpGet:
@@ -266,23 +266,23 @@ objects:
   - apiVersion: autoscaling/v1
     kind: HorizontalPodAutoscaler
     metadata:
-      name: "${SURVEY_NAME}limesurvey-app"
+      name: "${SURVEY_NAME}-limesurvey-app"
       labels:
-        app: "${SURVEY_NAME}limesurvey"
+        app: "${SURVEY_NAME}-limesurvey"
     spec:
       maxReplicas: "${{REPLICA_MAX}}"
       minReplicas: "${{REPLICA_MIN}}"
       scaleTargetRef:
         apiVersion: apps.openshift.io/v1
         kind: DeploymentConfig
-        name: "${SURVEY_NAME}limesurvey-app"
+        name: "${SURVEY_NAME}-limesurvey-app"
       targetCPUUtilizationPercentage: 95
   - kind: Service
     apiVersion: v1
     metadata:
-      name: "${SURVEY_NAME}limesurvey-app"
+      name: "${SURVEY_NAME}-limesurvey-app"
       labels:
-        app: "${SURVEY_NAME}limesurvey"
+        app: "${SURVEY_NAME}-limesurvey"
       annotations:
         description: Exposes and load balances the application pods
     spec:
@@ -292,8 +292,8 @@ objects:
           port: 8080
           targetPort: 8080
       selector:
-        app: "${SURVEY_NAME}limesurvey"
-        deploymentconfig: "${SURVEY_NAME}limesurvey-app"
+        app: "${SURVEY_NAME}-limesurvey"
+        deploymentconfig: "${SURVEY_NAME}-limesurvey-app"
       type: ClusterIP
       sessionAffinity: None
     status:
@@ -301,15 +301,15 @@ objects:
   - kind: Route
     apiVersion: v1
     metadata:
-      name: "${SURVEY_NAME}limesurvey-app"
+      name: "${SURVEY_NAME}-limesurvey-app"
       creationTimestamp:
       labels:
-        app: "${SURVEY_NAME}limesurvey"
+        app: "${SURVEY_NAME}-limesurvey"
     spec:
-      host: "${SURVEY_NAME}limesurvey.apps.silver.devops.gov.bc.ca"
+      host: "${SURVEY_NAME}-limesurvey.apps.silver.devops.gov.bc.ca"
       to:
         kind: Service
-        name: "${SURVEY_NAME}limesurvey-app"
+        name: "${SURVEY_NAME}-limesurvey-app"
         weight: 100
       port:
         targetPort: web
