@@ -11,7 +11,7 @@ parameters:
   - description: The OpenShift ImageStream name.
     displayName: Image Stream
     name: IS_NAME
-    value: limesurvey-gdx
+    value: gdx-limesurvey
   - description: Version of LimeSurvey image to be used (e.g. v.3.16.1).
     displayName: Version of LimeSurvey
     name: IS_VERSION
@@ -24,7 +24,7 @@ parameters:
   - description: The disk space reserved for LimeSurvey uploads.
     displayName: Upload Folder size
     name: UPLOAD_FOLDER_CAPACITY
-    value: 1Gi
+    value: 250Mi
   - description: The account name for the default LimeSurvey Administrator.
     displayName: Administrator Account Name
     name: ADMIN_USER
