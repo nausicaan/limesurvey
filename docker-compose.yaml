@@ -16,8 +16,7 @@ services:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 5s
       timeout: 5s
-      retries: 5      
-
+      retries: 5
   app:
     build:
       context: ./backend
@@ -26,7 +25,7 @@ services:
     ports:
       - 8080:8080
     # http://localhost:8080/index.php/admin/authentication/sa/login
-    environment: 
+    environment:
       DB_TYPE: ${DB_TYPE:-pgsql}
       POSTGRESQL_DB_HOST: ${DB_HOST:-db}
       POSTGRESQL_PORT: ${DB_PORT:-5432}

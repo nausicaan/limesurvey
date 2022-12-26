@@ -25,7 +25,7 @@ RUN apt-get update \
     && docker-php-ext-enable mcrypt \
     && docker-php-ext-install exif \
     pdo pdo_pgsql pgsql \
-    && a2enmod rewrite
+    && a2enmod rewrite --disable-fileinfo
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
