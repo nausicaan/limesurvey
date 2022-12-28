@@ -61,7 +61,7 @@ RUN set -x; \
 
 #Set PHP defaults for Limesurvey (allow bigger uploads)
 RUN { \
-    echo 'memory_limit=256M'; \
+    echo 'memory_limit=128M'; \
     echo 'upload_max_filesize=128M'; \
     echo 'post_max_size=128M'; \
     echo 'max_execution_time=120'; \
