@@ -48,6 +48,7 @@ services:
       - db
     entrypoint:
       [
+        "chmod 755 docker-entrypoint.sh",
         "/bin/sh",
         "-c",
         "dockerize -wait tcp://db:5432 -timeout 30s -- docker-entrypoint.sh apache2-foreground",
