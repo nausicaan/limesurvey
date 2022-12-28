@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:12.11
+    image: postgres:15.1
     user: postgres
     container_name: db
     hostname: db
