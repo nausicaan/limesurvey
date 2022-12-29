@@ -34,7 +34,7 @@ objects:
           dockerfilePath: Dockerfile
           buildArgs:
             - name: DOCKER_REGISTRY
-              value: artifacts.developer.gov.bc.ca/artifactory/docker-remote
+              value: docker-remote.artifacts.developer.gov.bc.ca
           pullSecret:
             name: docker-pull-passthru
       completionDeadlineSeconds: 600
