@@ -1,4 +1,4 @@
-ARG DOCKER_REGISTRY=artifacts.developer.gov.bc.ca/docker-remote/library
+ARG DOCKER_REGISTRY=docker.io/library
 FROM $DOCKER_REGISTRY/php:8.0-apache
 
 ENV DOCKERIZE_VERSION v0.6.1
