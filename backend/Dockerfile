@@ -1,10 +1,10 @@
-ARG DOCKER_REGISTRY=docker.io/library
+ARG DOCKER_REGISTRY=artifacts.developer.gov.bc.ca/docker-remote/library
 FROM $DOCKER_REGISTRY/php:8.0-apache
 
 ENV DOCKERIZE_VERSION v0.6.1
 
 ARG GITHUB_REPO=https://github.com/LimeSurvey/LimeSurvey
-ARG GITHUB_TAG=5.4.14+221205
+ARG GITHUB_TAG=5.5.0+221219
 # NOTE: Need to update the same ARGs in ../openshift/limesurvey-bc.yaml
 
 # install the PHP extensions we need
@@ -30,7 +30,7 @@ RUN apt-get update \
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
 RUN { \
-    echo 'opcache.memory_consumption=512'; \
+    echo 'opcache.memory_consumption=128'; \
     echo 'opcache.interned_strings_buffer=8'; \
     echo 'opcache.max_accelerated_files=4000'; \
     echo 'opcache.revalidate_freq=2'; \
@@ -61,7 +61,7 @@ RUN set -x; \
 
 #Set PHP defaults for Limesurvey (allow bigger uploads)
 RUN { \
-    echo 'memory_limit=128M'; \
+    echo 'memory_limit=256M'; \
     echo 'upload_max_filesize=128M'; \
     echo 'post_max_size=128M'; \
     echo 'max_execution_time=120'; \
