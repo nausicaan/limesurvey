@@ -2,7 +2,7 @@
 kind: Template
 apiVersion: template.openshift.io/v1
 metadata:
-  name: gdx-limesurvey-postgresql-dc
+  name: limesurvey-gdx-postgresql-dc
 parameters:
   - description: The short-name of the Survey Service, lower-case with hyphen.
     displayName: Survey Name

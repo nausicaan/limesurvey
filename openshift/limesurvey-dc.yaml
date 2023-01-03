@@ -2,7 +2,7 @@
 kind: Template
 apiVersion: template.openshift.io/v1
 metadata:
-  name: gdx-limesurvey-app-dc
+  name: limesurvey-gdx-app-dc
 parameters:
   - description: The OpenShift Namespace where the ImageStream resides.
     displayName: Namespace
@@ -11,7 +11,7 @@ parameters:
   - description: The OpenShift ImageStream name.
     displayName: Image Stream
     name: IS_NAME
-    value: gdx-limesurvey
+    value: limesurvey-gdx
   - description: Version of LimeSurvey image to be used (e.g. v.3.16.1).
     displayName: Version of LimeSurvey
     name: IS_VERSION

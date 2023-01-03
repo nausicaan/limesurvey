@@ -151,7 +151,7 @@ nausicaan@github
 
 ❯ oc -n c329bd-tools new-app --file=./openshift/postgresql.dc.yaml -p SURVEY_NAME=theta
 
---> Deploying template "c329bd-tools/gdx-limesurvey-postgresql-dc" for "./openshift/postgresql.dc.yaml" to project c329bd-tools
+--> Deploying template "c329bd-tools/limesurvey-gdx-postgresql-dc" for "./openshift/postgresql.dc.yaml" to project c329bd-tools
 
      * With parameters:
         * Survey Name=theta
@@ -177,7 +177,7 @@ After thirty seconds, the database pod should be up.
 ```bash
 > oc -n c329bd-tools new-app --file=./openshift/limesurvey-gdx.dc.yaml -p IS_NAMESPACE=c329bd-tools -p SURVEY_NAME=theta -p ADMIN_EMAIL=first.last@gov.bc.ca
 
---> Deploying template "c329bd-tools/gdx-limesurvey-app-dc" for "./openshift/limesurvey-gdx.dc.yaml" to project c329bd-tools
+--> Deploying template "c329bd-tools/limesurvey-gdx-app-dc" for "./openshift/limesurvey-gdx.dc.yaml" to project c329bd-tools
 
      * With parameters:
         * Namespace=c329bd-tools
@@ -245,7 +245,7 @@ export SURVEY=mass-test
 ```bash
 > oc -n ${PROJECT} new-app --file=./openshift/postgresql.dc.yaml -p SURVEY_NAME=${SURVEY}
 
---> Deploying template "c329bd-tools/gdx-limesurvey-postgresql-dc" for "./openshift/postgresql.dc.yaml" to project c329bd-tools
+--> Deploying template "c329bd-tools/limesurvey-gdx-postgresql-dc" for "./openshift/postgresql.dc.yaml" to project c329bd-tools
 
      * With parameters:
         * Survey Name=mass-test
@@ -271,7 +271,7 @@ Wait about 30 seconds, and/or confirm via the GUI that the DB is up:
 ```bash
 > oc -n ${PROJECT} new-app --file=./openshift/limesurvey-gdx.dc.yaml -p SURVEY_NAME=${SURVEY} -p IS_NAMESPACE=${TOOLS} -p ADMIN_EMAIL=Joe.Smith@gov.bc.ca -p ADMIN_NAME="MASS LimeSurvey Administrator"
 
---> Deploying template "c329bd-tools/gdx-limesurvey-app-dc" for "./openshift/limesurvey-gdx.dc.yaml" to project c329bd-tools
+--> Deploying template "c329bd-tools/limesurvey-gdx-app-dc" for "./openshift/limesurvey-gdx.dc.yaml" to project c329bd-tools
 
      * With parameters:
         * Namespace=c329bd-tools
