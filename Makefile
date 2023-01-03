@@ -11,12 +11,12 @@ clean:
 	docker-compose down 
 
 build:
-	docker buildx bake -f docker-compose.yml \
+	docker buildx bake -f docker-compose.yaml \
 		--set app.args.DOCKER_REGISTRY=docker.io/library
 
 # docker-compose up --build --remove-orphans --force-recreate
 build-nocache:
-	docker buildx bake --no-cache -f docker-compose.yml \
+	docker buildx bake --no-cache -f docker-compose.yaml \
 		--set app.args.DOCKER_REGISTRY=docker.io/library
 
 # http://localhost:8080/index.php/admin/authentication/sa/login
