@@ -113,7 +113,7 @@ Application deployed objects (e.g. deployment configs, secrets, services, etc) h
 
 #### LimeSurvey installation
 
-The application is automatically done as part of the `docker-entrypoint.sh`, which calls `nrm-check-install.php` returning either:
+The application is automatically done as part of the `docker-entrypoint.sh`, which calls `gdx-check-install.php` returning either:
 
 - `NOINSTALL` (Database Connection is valid but LimeSurvey has not yet been installed), or
 - `INSTALL` (LimeSurvey tables exist in the database)
@@ -177,7 +177,7 @@ After thirty seconds, the database pod should be up.
 ```bash
 > oc -n c329bd-tools new-app --file=./openshift/limesurvey-gdx.dc.yaml -p IS_NAMESPACE=c329bd-tools -p SURVEY_NAME=theta -p ADMIN_EMAIL=first.last@gov.bc.ca
 
---> Deploying template "c329bd-tools/nrmlimesurvey-app-dc" for "./openshift/limesurvey-gdx.dc.yaml" to project c329bd-tools
+--> Deploying template "c329bd-tools/gdx-limesurvey-app-dc" for "./openshift/limesurvey-gdx.dc.yaml" to project c329bd-tools
 
      * With parameters:
         * Namespace=c329bd-tools
@@ -245,7 +245,7 @@ export SURVEY=mass-test
 ```bash
 > oc -n ${PROJECT} new-app --file=./openshift/postgresql.dc.yaml -p SURVEY_NAME=${SURVEY}
 
---> Deploying template "c329bd-tools/nrmlimesurvey-postgresql-dc" for "./openshift/postgresql.dc.yaml" to project c329bd-tools
+--> Deploying template "c329bd-tools/gdx-limesurvey-postgresql-dc" for "./openshift/postgresql.dc.yaml" to project c329bd-tools
 
      * With parameters:
         * Survey Name=mass-test
@@ -269,9 +269,9 @@ export SURVEY=mass-test
 Wait about 30 seconds, and/or confirm via the GUI that the DB is up:
 
 ```bash
-> oc -n ${PROJECT} new-app --file=./openshift/limesurvey-gdx.dc.yaml -p SURVEY_NAME=${SURVEY} -p IS_NAMESPACE=${TOOLS} -p ADMIN_EMAIL=Joe.Smith@gov.bc.ca -p ADMIN_NAME="MAS LimeSurvey Administrator"
+> oc -n ${PROJECT} new-app --file=./openshift/limesurvey-gdx.dc.yaml -p SURVEY_NAME=${SURVEY} -p IS_NAMESPACE=${TOOLS} -p ADMIN_EMAIL=Joe.Smith@gov.bc.ca -p ADMIN_NAME="MASS LimeSurvey Administrator"
 
---> Deploying template "c329bd-tools/nrmlimesurvey-app-dc" for "./openshift/limesurvey-gdx.dc.yaml" to project c329bd-tools
+--> Deploying template "c329bd-tools/gdx-limesurvey-app-dc" for "./openshift/limesurvey-gdx.dc.yaml" to project c329bd-tools
 
      * With parameters:
         * Namespace=c329bd-tools
@@ -280,7 +280,7 @@ Wait about 30 seconds, and/or confirm via the GUI that the DB is up:
         * LimeSurvey Acronym=mass-test
         * Upload Folder size=1Gi
         * Administrator Account Name=admin
-        * Administrator Display Name=MAS LimeSurvey Administrator
+        * Administrator Display Name=MASS LimeSurvey Administrator
         * Administrator Password=dV0x1DuaBYjNhjCG # generated
         * Administrator Email Address=Joe.Smith@gov.bc.ca
         * Database Type=pgsql
