@@ -7,7 +7,7 @@ parameters:
   - description: The OpenShift Namespace where the ImageStream resides.
     displayName: Namespace
     name: IS_NAMESPACE
-    value: c329bd-tools
+    value: c329bd-dev
   - description: The OpenShift ImageStream name.
     displayName: Image Stream
     name: IS_NAME
