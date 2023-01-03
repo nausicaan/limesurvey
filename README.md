@@ -33,7 +33,7 @@ This repository contains OpenShift templates outlining an instance of [LimeSurve
 
 For appropriate security on deployed pods:
 
-- Kubernetes Network Policies should be in place, see the [Network Policy QuickStart](https://github.com/bcgov/how-to-workshops/tree/master/labs/netpol-quickstart) (note that [Aporeto](https://github.com/bcgov/networkpolicy-migration-workshop) is no longer support on BC Gov OpenShift)
+- Kubernetes Network Policies should be in place, see the [Network Policy QuickStart](https://github.com/bcgov/how-to-workshops/tree/master/labs/netpol-quickstart)
 
 For build:
 
