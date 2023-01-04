@@ -15,7 +15,7 @@ parameters:
   - description: Version of LimeSurvey image to be used (e.g. v.3.16.1).
     displayName: Version of LimeSurvey
     name: IS_VERSION
-    value: 5.4.15
+    value: 5.5.0
   - description: The short-name of the Survey Service, lower-case with hyphen.
     displayName: LimeSurvey Acronym
     name: SURVEY_NAME

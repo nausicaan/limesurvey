@@ -1,10 +1,10 @@
 ARG DOCKER_REGISTRY=artifacts.developer.gov.bc.ca/docker-remote/library
-FROM $DOCKER_REGISTRY/php:8.0-apache
+FROM $DOCKER_REGISTRY/php:8.1-apache
 
 ENV DOCKERIZE_VERSION v0.6.1
 
 ARG GITHUB_REPO=https://github.com/LimeSurvey/LimeSurvey
-ARG GITHUB_TAG=5.4.15+221212
+ARG GITHUB_TAG=5.5.0+221219
 # NOTE: Need to update the same ARGs in ../openshift/limesurvey-bc.yaml
 
 # install the PHP extensions we need
