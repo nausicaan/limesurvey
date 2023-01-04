@@ -34,7 +34,7 @@ if [[ "$1" == apache2* ]] || [ "$1" == php-fpm ]; then
 
 	if [ "${DBSTATUS}" = "NOINSTALL" ]; then
         echo >&2 'Database not yet populated - installing Limesurvey database'
-	    php application/commands/console.php install "#[\ReturnTypeWillChange]" "$ADMIN_USER" "$ADMIN_PASSWORD" "$ADMIN_NAME" "$ADMIN_EMAIL" verbose
+	    php application/commands/console.php install "$ADMIN_USER" "$ADMIN_PASSWORD" "$ADMIN_NAME" "$ADMIN_EMAIL" verbose
 	fi
 
     #flush asssets (clear cache on restart)
