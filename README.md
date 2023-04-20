@@ -66,7 +66,7 @@ For a brand new build/image/imagestream/imagestreamtag in your new namespace, yo
 
 ```console
 oc -n <tools-namespace> create istag limesurvey-gdx:latest
-oc -n <tools-namespace> process -f ci/openshift/limesurvey.bc.yaml | oc -n <tools-namespace> apply -f -
+oc -n <tools-namespace> process -f openshift/limesurvey-bc.yaml | oc -n <tools-namespace> apply -f -
 oc -n <tools-namespace> start-build limesurvey-gdx
 ```
 
@@ -89,7 +89,7 @@ ARG GITHUB_TAG=5.4.15+221212
 Deploy the DB using the correct SURVEY_NAME parameter (e.g. an acronym that will be automatically prefixed to `limesurvey`):
 
 ```console
-oc -n <project> new-app --file=./openshift/postgresql.dc.yaml -p SURVEY_NAME=<survey>
+oc -n <project> new-app --file=./openshift/postgresql-dc.yaml -p SURVEY_NAME=<survey>
 ```
 
 All DB deployments are based on the out-of-the-box [OpenShift Database Image](https://docs.openshift.com/container-platform/3.11/using_images/db_images/postgresql.html), and DB deployed objects (e.g. deployment configs, secrets, services, etc) have a naming convention of `<survey>-limesurvey-postgresql` in the Openshift console.
@@ -148,9 +148,9 @@ As a concrete example of a survey with the acronym `theta`, deployed in the proj
 ❯ oc whoami
 nausicaan@github
 
-❯ oc -n c329bd-tools new-app --file=./openshift/postgresql.dc.yaml -p SURVEY_NAME=theta
+❯ oc -n c329bd-tools new-app --file=./openshift/postgresql-dc.yaml -p SURVEY_NAME=theta
 
---> Deploying template "c329bd-tools/limesurvey-gdx-postgresql-dc" for "./openshift/postgresql.dc.yaml" to project c329bd-tools
+--> Deploying template "c329bd-tools/limesurvey-gdx-postgresql-dc" for "./openshift/postgresql-dc.yaml" to project c329bd-tools
 
      * With parameters:
         * Survey Name=theta
@@ -242,9 +242,9 @@ export SURVEY=mass-test
 ### Database Deployment
 
 ```console
-> oc -n ${PROJECT} new-app --file=./openshift/postgresql.dc.yaml -p SURVEY_NAME=${SURVEY}
+> oc -n ${PROJECT} new-app --file=./openshift/postgresql-dc.yaml -p SURVEY_NAME=${SURVEY}
 
---> Deploying template "c329bd-tools/limesurvey-gdx-postgresql-dc" for "./openshift/postgresql.dc.yaml" to project c329bd-tools
+--> Deploying template "c329bd-tools/limesurvey-gdx-postgresql-dc" for "./openshift/postgresql-dc.yaml" to project c329bd-tools
 
      * With parameters:
         * Survey Name=mass-test
@@ -372,7 +372,7 @@ Once logged as an Admin, you'll be brought to the Welcome page:
 - to customize the deployment with higher/lower resources, using environment variables, use  these examples:
 
   ```console
-  oc -n ${PROJECT} new-app --file=./openshift/postgresql.dc.yaml -p SURVEY_NAME=${SURVEY} -p MEMORY_LIMIT=768Mi -p DB_VOLUME_CAPACITY=1280M
+  oc -n ${PROJECT} new-app --file=./openshift/postgresql-dc.yaml -p SURVEY_NAME=${SURVEY} -p MEMORY_LIMIT=768Mi -p DB_VOLUME_CAPACITY=1280M
   
-  oc -n ${PROJECT} new-app --file=./openshift/limesurvey.dc.yaml -p SURVEY_NAME=${SURVEY} -p ADMIN_EMAIL=John.Doe@gov.bc.ca -p ADMIN_NAME="IITD LimeSurvey Administrator" -p REPLICA_MIN=2
+  oc -n ${PROJECT} new-app --file=./openshift/limesurvey-dc.yaml -p SURVEY_NAME=${SURVEY} -p ADMIN_EMAIL=John.Doe@gov.bc.ca -p ADMIN_NAME="IITD LimeSurvey Administrator" -p REPLICA_MIN=2
   ```
