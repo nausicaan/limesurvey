@@ -78,7 +78,7 @@ objects:
             from:
               kind: ImageStreamTag
               namespace: openshift
-              name: postgresql:12
+              name: postgresql:15
       replicas: 1
       revisionHistoryLimit: 10
       test: false
