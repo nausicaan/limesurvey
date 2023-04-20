@@ -4,7 +4,6 @@
 
 - [GDX LimeSurvey](#gdx-limesurvey)
   - [Prerequisites](#prerequisites)
-  - [Files](#files)
   - [Build](#build)
     - [Image Creation](#image-creation)
   - [Deploy](#deploy)
@@ -41,7 +40,7 @@ For build:
 - the [oc](https://docs.openshift.com/container-platform/4.6/cli_reference/openshift_cli/getting-started-cli.html) CLI tool, installed on your local workstation
 - access to this public [GitHub Repo](./)
 - docker-pull-passthru secret referencing [artifactory credentials](https://developer.gov.bc.ca/Developer-Tools/Artifact-Repositories-(Artifactory))
-```bash
+```console
 oc -n <tools-namespace> create secret docker-registry docker-pull-passthru \
 --docker-server=docker-remote.artifacts.developer.gov.bc.ca \
 --docker-username=default-<namespace>-<random> \
@@ -65,7 +64,7 @@ Once deployed, any visitors to the site will require a modern browser (e.g. Edge
 
 For a brand new build/image/imagestream/imagestreamtag in your new namespace, you would first create an image stream using this (forked) code (replace `<tools-namespace>` with your `*-tools` project namespace).
 
-```bash
+```console
 oc -n <tools-namespace> create istag limesurvey-gdx:latest
 oc -n <tools-namespace> process -f ci/openshift/limesurvey.bc.yaml | oc -n <tools-namespace> apply -f -
 oc -n <tools-namespace> start-build limesurvey-gdx
@@ -73,7 +72,7 @@ oc -n <tools-namespace> start-build limesurvey-gdx
 
 Tag the built image stream with the correct release version, matching the `major.minor` release tag at the source [repo](https://github.com/LimeSurvey/LimeSurvey). For example, this v5.4.15 was tagged via:
 
-```bash
+```console
 oc -n <tools-namespace> tag limesurvey-gdx:latest limesurvey-gdx:5.4.15
 ```
 
@@ -89,7 +88,7 @@ ARG GITHUB_TAG=5.4.15+221212
 
 Deploy the DB using the correct SURVEY_NAME parameter (e.g. an acronym that will be automatically prefixed to `limesurvey`):
 
-```bash
+```console
 oc -n <project> new-app --file=./openshift/postgresql.dc.yaml -p SURVEY_NAME=<survey>
 ```
 
@@ -103,7 +102,7 @@ Deploy the Application specifying:
 - your project `*-tools` namespace that contains the image, and
 - a `@gov.bc.ca` email account that will be used with the `apps.smtp.gov.bc.ca` SMTP Email Server:
 
-```bash
+```console
 oc -n <project> new-app --file=./openshift/limesurvey-gdx.dc.yaml -p SURVEY_NAME=<survey> -p IS_NAMESPACE=<tools> -p ADMIN_EMAIL=<Email.Address>@gov.bc.ca
 ```
 
@@ -120,7 +119,7 @@ The application is automatically done as part of the `docker-entrypoint.sh`, whi
 
 If `NOINSTALL` is returned, then the script automatically runs:
 
-```bash
+```console
 php application/commands/console.php install "$ADMIN_USER" "$ADMIN_PASSWORD" "$ADMIN_NAME" "$ADMIN_EMAIL" verbose
 ```
 
@@ -133,8 +132,8 @@ Once the application has finished the initial install you may log in as the admi
 
 NOTE: The password is also stored as a secret in the OCP Console (`<survey>-limesurvey-app.admin-password`), or can be echoed in the shell of deployed app terminal:
 
-```bash
-$ echo ${ADMIN_PASSWORD}
+```console
+echo ${ADMIN_PASSWORD}
 ```
 
 ## Example Deployment
@@ -145,7 +144,7 @@ As a concrete example of a survey with the acronym `theta`, deployed in the proj
 
 ### Example Database Deployment
 
-```bash
+```console
 ❯ oc whoami
 nausicaan@github
 
@@ -174,7 +173,7 @@ nausicaan@github
 
 After thirty seconds, the database pod should be up.
 
-```bash
+```console
 > oc -n c329bd-tools new-app --file=./openshift/limesurvey-gdx.dc.yaml -p IS_NAMESPACE=c329bd-tools -p SURVEY_NAME=theta -p ADMIN_EMAIL=first.last@gov.bc.ca
 
 --> Deploying template "c329bd-tools/limesurvey-gdx-app-dc" for "./openshift/limesurvey-gdx.dc.yaml" to project c329bd-tools
@@ -234,7 +233,7 @@ As this is a template deployment, it may be easier to set environment variable f
 
 On a workstation logged into the OpenShift Console:
 
-```bash
+```console
 export TOOLS=c329bd-tools
 export PROJECT=c329bd-tools
 export SURVEY=mass-test
@@ -242,7 +241,7 @@ export SURVEY=mass-test
 
 ### Database Deployment
 
-```bash
+```console
 > oc -n ${PROJECT} new-app --file=./openshift/postgresql.dc.yaml -p SURVEY_NAME=${SURVEY}
 
 --> Deploying template "c329bd-tools/limesurvey-gdx-postgresql-dc" for "./openshift/postgresql.dc.yaml" to project c329bd-tools
@@ -268,7 +267,7 @@ export SURVEY=mass-test
 
 Wait about 30 seconds, and/or confirm via the GUI that the DB is up:
 
-```bash
+```console
 > oc -n ${PROJECT} new-app --file=./openshift/limesurvey-gdx.dc.yaml -p SURVEY_NAME=${SURVEY} -p IS_NAMESPACE=${TOOLS} -p ADMIN_EMAIL=Joe.Smith@gov.bc.ca -p ADMIN_NAME="MASS LimeSurvey Administrator"
 
 --> Deploying template "c329bd-tools/limesurvey-gdx-app-dc" for "./openshift/limesurvey-gdx.dc.yaml" to project c329bd-tools
@@ -333,26 +332,26 @@ Once logged as an Admin, you'll be brought to the Welcome page:
 
   or if using environment variables:
 
-  ```bash
+  ```console
   oc -n ${PROJECT} delete secret/${SURVEY}-limesurvey-postgresql dc/${SURVEY}-limesurvey-postgresql svc/${SURVEY}-limesurvey-postgresql
   oc -n ${PROJECT} delete pvc/${SURVEY}-limesurvey-postgresql
   ```
 
 - to clean-up application deployments:
 
-  ```bash
+  ```console
   oc -n <project> delete secret/<survey>-limesurvey-app dc/<survey>-limesurvey-app svc/<survey>-limesurvey-app route/<survey>-limesurvey-app hpa/<survey>-limesurvey-app`
   ```
 
   NOTE: The Configuration, Upload, and Plugins Volumes are left intact in case there are customized assets; if not (i.e. it's a brand-new survey):  
 
-  ```bash
+  ```console
   oc -n <project> delete pvc/<survey>-limesurvey-app-config pvc/<survey>-limesurvey-app-upload pvc/<survey>-limesurvey-app-plugins`
   ```
 
   or if using environment variables:
 
-  ```bash
+  ```console
   oc -n ${PROJECT} delete secret/${SURVEY}-limesurvey-app dc/${SURVEY}-limesurvey-app svc/${SURVEY}-limesurvey-app route/${SURVEY}-limesurvey-app hpa/${SURVEY}-limesurvey-app pvc/${SURVEY}-limesurvey-app-config pvc/${SURVEY}-limesurvey-app-upload pvc/${SURVEY}-limesurvey-app-plugins
   ```
 
@@ -362,7 +361,7 @@ Once logged as an Admin, you'll be brought to the Welcome page:
 
   or if using environment variables:
 
-  ```bash
+  ```console
   oc -n ${PROJECT} delete all,secret,pvc,hpa -l app=${SURVEY}-limesurvey
   ```
 
@@ -372,7 +371,7 @@ Once logged as an Admin, you'll be brought to the Welcome page:
 
 - to customize the deployment with higher/lower resources, using environment variables, use  these examples:
 
-  ```bash
+  ```console
   oc -n ${PROJECT} new-app --file=./openshift/postgresql.dc.yaml -p SURVEY_NAME=${SURVEY} -p MEMORY_LIMIT=768Mi -p DB_VOLUME_CAPACITY=1280M
   
   oc -n ${PROJECT} new-app --file=./openshift/limesurvey.dc.yaml -p SURVEY_NAME=${SURVEY} -p ADMIN_EMAIL=John.Doe@gov.bc.ca -p ADMIN_NAME="IITD LimeSurvey Administrator" -p REPLICA_MIN=2
