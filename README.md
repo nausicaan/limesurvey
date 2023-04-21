@@ -216,10 +216,10 @@ The Administrative interface is at:
 https://theta-limesurvey.apps.silver.devops.gov.bc.ca/index.php/admin/
 
 and brings to you a screen like:
-![Admin Logon](./images/AdminLogin.png)
+![Admin Logon](images/AdminLogin.png)
 
 Once logged as an Admin, you'll be brought to the Welcome page:
-![Welcome Page](./images/WelcomePage.png)
+![Welcome Page](images/WelcomePage.png)
 
 </details>
 
