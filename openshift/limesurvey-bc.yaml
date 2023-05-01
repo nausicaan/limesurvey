@@ -2,7 +2,8 @@
 kind: Template
 apiVersion: template.openshift.io/v1
 labels:
-  app: "limesurvey"
+  app: limesurvey
+  app.kubernetes.io/name: limesurvey
 metadata:
   name: "limesurvey-gdx-bc"
 objects:
@@ -22,6 +23,10 @@ objects:
       labels:
         buildconfig: "${NAME}"
         app: "${NAME}"
+      annotations:
+        openshift.io/build-config.name: limesurvey-gdx-bc
+        openshift.io/build.number: '1'
+        openshift.io/build.pod-name: limesurvey-gdx-1-build
     spec:
       source:
         type: Git
