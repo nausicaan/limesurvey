@@ -52,10 +52,10 @@ objects:
       postCommit: {}
       resources:
         limits:
-          cpu: 1200m
+          cpu: 250m
           memory: 750Mi
         requests:
-          cpu: 1000m
+          cpu: 50m
           memory: 500Mi
       runPolicy: SerialLatestOnly
 parameters:
