@@ -98,6 +98,26 @@ objects:
               persistentVolumeClaim:
                 claimName: "${SURVEY_NAME}-limesurvey-postgresql"
           containers:
+            - name: liveness
+              image: registry.k8s.io/wordpress
+              args:
+              - /bin/sh
+              - -c
+              - touch /tmp/healthy; sleep 30; rm -f /tmp/healthy; sleep 600
+              livenessProbe:
+                exec:
+                  command:
+                  - cat
+                  - /tmp/healthy
+                initialDelaySeconds: 5
+                periodSeconds: 5
+              readinessProbe:
+                exec:
+                  command:
+                  - cat
+                  - /tmp/healthy
+                initialDelaySeconds: 5
+                periodSeconds: 5
             - name: "${SURVEY_NAME}-limesurvey-postgresql"
               image: " "
               ports:
