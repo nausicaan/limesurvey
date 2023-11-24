@@ -309,10 +309,10 @@ Wait about 30 seconds, and/or confirm via the GUI that the DB is up:
 The Administrative interface is at https://${SURVEY}.apps.silver.devops.gov.bc.ca/index.php/admin/ which is this example is https://mass-testlimesurvey.apps.silver.devops.gov.bc.ca/ .
 
 and brings to you a screen like:
-![Admin Logon](./docs/images/AdminLogin.png)
+![Admin Logon](images/AdminLogin.png)
 
 Once logged as an Admin, you'll be brought to the Welcome page:
-![Welcome Page](./docs/images/WelcomePage.png)
+![Welcome Page](images/WelcomePage.png)
 
 </details>
 
