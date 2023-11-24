@@ -55,7 +55,7 @@ objects:
           cpu: 1200m
           memory: 750Mi
         requests:
-          cpu: 500m
+          cpu: 1000m
           memory: 500Mi
       runPolicy: SerialLatestOnly
 parameters:
