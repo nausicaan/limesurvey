@@ -1,0 +1,17 @@
+# Logs
+*.log
+
+# Dotenv
+.env
+.env.*
+!.env.example
+
+# Folders and files
+/development
+/temp
+
+# Client workstations
+.DS_Store
+._.DS_Store
+Thumbs.db
+.idea
