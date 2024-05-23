@@ -15,11 +15,19 @@ Applications needed will be:
 
 ## Build
 
-Individually, the images can be built tagged, and pushed to a repo for easy access.
+Individually, the images can be built, tagged, and pushed to a repo for easy access.
 
 1. docker build -f Dockerfile -t [name] .
 2. docker image tag [name]:latest [repo]/[name]:[version]
 3. docker push [repo]/[name]:[version]
+
+## Runtime variables
+
+- ARG VERSION="6.5.8+240517"
+- ARG USER="1014150000"
+- ARG DIR="/data/limesurvey"
+
+Update these variables as needed.
 
 ### Extras
 

@@ -1,6 +1,6 @@
 FROM php:8.3-fpm
 
-# Download and unzip LimeSurvey from GitHub
+# Runtime variables
 ARG VERSION="6.5.8+240517"
 ARG USER="1014150000"
 ARG DIR="/data/limesurvey"
@@ -31,8 +31,7 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR ${DIR}
 
-# RUN curl -o limesurvey.tar.gz -SL "https://github.com/LimeSurvey/LimeSurvey/archive/refs/tags/${VERSION}.tar.gz" \
-
+# Download and unzip LimeSurvey from GitHub
 ADD "https://github.com/LimeSurvey/LimeSurvey/archive/refs/tags/${VERSION}.tar.gz" limesurvey.tar.gz
 
 RUN tar -xzf limesurvey.tar.gz --strip-components=1 \
