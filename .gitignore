@@ -9,6 +9,7 @@
 # Folders and files
 /development
 /temp
+/yaml
 
 # Client workstations
 .DS_Store

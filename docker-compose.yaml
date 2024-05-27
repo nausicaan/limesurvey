@@ -1,0 +1,30 @@
+name: limesurvey
+
+services:
+    mariadb:
+        container_name: lime-database
+        image: mariadb:latest
+        environment:
+            - MARIADB_DATABASE=${DB_NAME}
+            - MARIADB_USER=${DB_USER}
+            - MARIADB_PASSWORD=${DB_PASSWORD}
+            - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+            - MARIADB_HOST=${DB_HOST}
+            - MARIADB_PREFIX=${DB_PREFIX}
+        volumes:
+            - db_data:/var/lib/mysql
+    lime:
+        container_name: lime-app
+        image: limesurvey:latest
+        volumes:
+            - wp_data:/data
+    nginx:
+        container_name: lime-proxy
+        image: nginx:latest
+        ports:
+            - "8080:80"
+        volumes:
+            - wp_data:/data
+volumes:
+  db_data:
+  wp_data:
