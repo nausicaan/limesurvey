@@ -2,7 +2,7 @@ name: limesurvey
 
 services:
     mariadb:
-        container_name: lime-database
+        container_name: mariadb
         image: mariadb:latest
         environment:
             - MARIADB_DATABASE=${DB_NAME}
@@ -13,13 +13,13 @@ services:
             - MARIADB_PREFIX=${DB_PREFIX}
         volumes:
             - db_data:/var/lib/mysql
-    lime:
-        container_name: lime-app
+    limesurvey:
+        container_name: limesurvey
         image: limesurvey:latest
         volumes:
             - wp_data:/data
     nginx:
-        container_name: lime-proxy
+        container_name: nginx
         image: nginx:latest
         ports:
             - "8080:80"

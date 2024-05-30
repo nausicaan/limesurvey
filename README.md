@@ -1,6 +1,6 @@
 # LimeSurvey Instance
 
-Create a functional, but reproducible (simple) instance of LimeSurvey in OpenShift. Complete with an NGINX proxy server and a MariaDB backend.
+Create a functional, but reproducible (simple) instance of LimeSurvey in OpenShift. Complete with an NGiNX proxy server and a MariaDB backend.
 
 ![Stack](ls.webp)
  
@@ -31,10 +31,13 @@ Update these variables as needed.
 
 ### Extras
 
-MariaDB requires a .env file with the following values:
+MariaDB requires a `.env` file with the following values:
 
 ```bash
 DB_NAME=''
 DB_USER=''
 DB_PASSWORD=''
 DB_ROOT_PASSWORD=''
+```
+
+The `docker-compose.yaml` file can be used to create local instances for testing. Otherwise, simply build the images as need and push them to your desired repository.

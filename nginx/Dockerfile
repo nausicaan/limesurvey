@@ -1,4 +1,4 @@
-FROM nginx:1.25.5
+FROM nginx:1.27.0
 
 ARG USER="1014150000"
 ARG CONFIG="limesurvey.conf"
